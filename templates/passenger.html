@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Passenger Details</h2>
+
+<form action="/payment/{{ train_id }}/{{ seat }}" method="POST" class="form-card">
+    <input type="text" name="name" placeholder="Full Name" required>
+    <input type="number" name="age" placeholder="Age" required>
+    <p>Seat Selected: {{ seat }}</p>
+    <button type="submit">Proceed to Payment</button>
+</form>
+
+{% endblock %}

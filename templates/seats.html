@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Select Seat</h2>
+
+<div class="seat-grid">
+    {% for i in range(1,21) %}
+    <a href="/passenger/{{ train_id }}/S{{ i }}">
+        <div class="seat">S{{ i }}</div>
+    </a>
+    {% endfor %}
+</div>
+
+{% endblock %}

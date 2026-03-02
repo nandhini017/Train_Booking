@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="hero">
+    <h1>Book Train Tickets Easily</h1>
+    <p>Fast • Secure • Reliable</p>
+</div>
+
+<div class="search-card">
+    <form action="/trains" method="POST">
+        <input type="text" name="from" placeholder="From City" required>
+        <input type="text" name="to" placeholder="To City" required>
+        <button type="submit">Search Trains</button>
+    </form>
+</div>
+
+{% endblock %}

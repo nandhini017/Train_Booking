@@ -1,0 +1,1 @@
+console.log("FastRail Loaded Successfully");

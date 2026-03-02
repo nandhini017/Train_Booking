@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Available Trains</h2>
+
+<div class="train-grid">
+    {% for train in trains %}
+    <div class="train-card">
+        <img src="{{ url_for('static', filename='images/' + train.image) }}">
+        <h3>{{ train.name }}</h3>
+        <p>{{ train.from_city }} → {{ train.to_city }}</p>
+        <p>₹{{ train.price }}</p>
+        <a href="/seats/{{ train.id }}">
+            <button>Book Now</button>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
