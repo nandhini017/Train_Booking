@@ -1,20 +1,81 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block content %}
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #f0f2f5;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+    }
+    .train-card {
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        width: 500px;
+        padding: 20px;
+        margin: 15px 0;
+        text-align: left;
+    }
+    .train-card h4 {
+        margin: 0 0 10px 0;
+        color: #007bff;
+    }
+    .train-card p {
+        margin: 5px 0;
+        font-size: 14px;
+        color: #333;
+    }
+    .train-card button {
+        padding: 10px 20px;
+        background: #28a745;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-top: 10px;
+        transition: 0.3s;
+    }
+    .train-card button:hover {
+        background: #1e7e34;
+        transform: scale(1.05);
+    }
+</style>
 
 <h2>Available Trains</h2>
 
-<div class="train-grid">
+{% if trains %}
     {% for train in trains %}
-    <div class="train-card">
-        <img src="{{ url_for('static', filename='images/' + train.image) }}">
-        <h3>{{ train.name }}</h3>
-        <p>{{ train.from_city }} → {{ train.to_city }}</p>
-        <p>₹{{ train.price }}</p>
-        <a href="/seats/{{ train.id }}">
-            <button>Book Now</button>
-        </a>
-    </div>
+        <div class="train-card">
+            <h4>{{ train.name }}</h4>
+            <p><strong>Route:</strong> {{ train.from_city }} → {{ train.to_city }}</p>
+            <p><strong>Departure:</strong> {{ train.departure }} | <strong>Arrival:</strong> {{ train.arrival }}</p>
+            <p>
+                <strong>Price ({{ class_type }}):</strong> 
+                {% if class_type == 'Sleeper' %}
+                    ₹{{ train.price_sleeper }}
+                {% elif class_type == '3AC' %}
+                    ₹{{ train.price_3ac }}
+                {% elif class_type == '2AC' %}
+                    ₹{{ train.price_2ac }}
+                {% elif class_type == '1AC' %}
+                    ₹{{ train.price_1ac }}
+                {% else %}
+                    ₹{{ train.price_sleeper }}
+                {% endif %}
+            </p>
+            <a href="/seats/{{ train.id }}">
+                <button>Select Seat</button>
+            </a>
+        </div>
     {% endfor %}
-</div>
+{% else %}
+    <p>No trains found for this route.</p>
+{% endif %}
 
 {% endblock %}

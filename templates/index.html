@@ -1,17 +1,192 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block content %}
 
-<div class="hero">
-    <h1>Book Train Tickets Easily</h1>
-    <p>Fast • Secure • Reliable</p>
-</div>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background: url("https://images.unsplash.com/photo-1505761671935-60b3a7427bad") no-repeat center center/cover;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-<div class="search-card">
-    <form action="/trains" method="POST">
-        <input type="text" name="from" placeholder="From City" required>
-        <input type="text" name="to" placeholder="To City" required>
-        <button type="submit">Search Trains</button>
+    .search-container {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(12px);
+        padding: 40px;
+        border-radius: 20px;
+        width: 450px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        color: white;
+        text-align: center;
+    }
+
+    .search-container h2 {
+        margin-bottom: 25px;
+        font-size: 26px;
+    }
+
+    .search-form select,
+    .search-form input {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        border-radius: 10px;
+        border: none;
+        font-size: 14px;
+    }
+
+    .search-form button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 15px;
+        border: none;
+        border-radius: 10px;
+        background: #ff4d4d;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .search-form button:hover {
+        background: #e60000;
+        transform: scale(1.05);
+    }
+
+    /* Hidden section initially */
+    .booking-details {
+        display: none;
+    }
+</style>
+
+<div class="search-container">
+    <h2>Book Train Tickets</h2>
+
+    <form action="/trains" method="POST" class="search-form" id="trainForm">
+
+        <!-- 1️⃣ User Details Section -->
+        <div class="user-details">
+            <input type="text" name="user_name" placeholder="Full Name" required>
+            <input type="email" name="user_email" placeholder="Email" required>
+            <input type="tel" name="user_phone" placeholder="Phone Number" required>
+            <button type="button" id="nextBtn">Next</button>
+        </div>
+
+        <!-- 2️⃣ Booking Details Section (Initially Hidden) -->
+        <div class="booking-details">
+            <select name="from" required>
+                <option value="">From</option>
+                <option>Delhi</option>
+                <option>Mumbai</option>
+                <option>Chennai</option>
+                <option>Bangalore</option>
+                <option>Hyderabad</option>
+                <option>Kolkata</option>
+                <option>Pune</option>
+                <option>Ahmedabad</option>
+                <option>Jaipur</option>
+                <option>Lucknow</option>
+                <option>Goa</option>
+                <option>Coimbatore</option>
+                <option>Patna</option>
+                <option>Bhopal</option>
+                <option>Indore</option>
+                <option>Surat</option>
+                <option>Nagpur</option>
+                <option>Varanasi</option>
+                <option>Vijayawada</option>
+                <option>Mysore</option>
+                <option>Thiruvananthapuram</option>
+                <option>Madurai</option>
+                <option>Ranchi</option>
+                <option>Chandigarh</option>
+                <option>Amritsar</option>
+                <option>Guwahati</option>
+                <option>Raipur</option>
+                <option>Visakhapatnam</option>
+                <option>Kanpur</option>
+                <option>Udaipur</option>
+            </select>
+
+            <select name="to" required>
+                <option value="">To</option>
+                <option>Delhi</option>
+                <option>Mumbai</option>
+                <option>Chennai</option>
+                <option>Bangalore</option>
+                <option>Hyderabad</option>
+                <option>Kolkata</option>
+                <option>Pune</option>
+                <option>Ahmedabad</option>
+                <option>Jaipur</option>
+                <option>Lucknow</option>
+                <option>Goa</option>
+                <option>Coimbatore</option>
+                <option>Patna</option>
+                <option>Bhopal</option>
+                <option>Indore</option>
+                <option>Surat</option>
+                <option>Nagpur</option>
+                <option>Varanasi</option>
+                <option>Vijayawada</option>
+                <option>Mysore</option>
+                <option>Thiruvananthapuram</option>
+                <option>Madurai</option>
+                <option>Ranchi</option>
+                <option>Chandigarh</option>
+                <option>Amritsar</option>
+                <option>Guwahati</option>
+                <option>Raipur</option>
+                <option>Visakhapatnam</option>
+                <option>Kanpur</option>
+                <option>Udaipur</option>
+            </select>
+
+            <input type="date" name="travel_date" required>
+
+            <select name="class_type">
+                <option value="Sleeper">Sleeper</option>
+                <option value="3AC">3AC</option>
+                <option value="2AC">2AC</option>
+                <option value="1AC">1AC</option>
+            </select>
+
+            <select name="passengers" required>
+                {% for i in range(1, 7) %}
+                    <option value="{{ i }}">{{ i }} Passenger{% if i > 1 %}s{% endif %}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Search Trains</button>
+        </div>
+
     </form>
 </div>
+
+<script>
+    const nextBtn = document.getElementById('nextBtn');
+    const userDetails = document.querySelector('.user-details');
+    const bookingDetails = document.querySelector('.booking-details');
+
+    nextBtn.addEventListener('click', () => {
+        // Validate user details
+        const name = document.querySelector('input[name="user_name"]').value.trim();
+        const email = document.querySelector('input[name="user_email"]').value.trim();
+        const phone = document.querySelector('input[name="user_phone"]').value.trim();
+        if(!name || !email || !phone){
+            alert("Please fill all user details.");
+            return;
+        }
+
+        // Hide user section, show booking section
+        userDetails.style.display = 'none';
+        bookingDetails.style.display = 'block';
+    });
+</script>
 
 {% endblock %}

@@ -1,21 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>FastRail</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Train Booking</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+    <div class="navbar">
+        <h2>🚆 Train Booking System</h2>
+    </div>
 
-<header>
-    <div class="logo">🚆 FastRail</div>
-    <nav>
-        <a href="/">Home</a>
-    </nav>
-</header>
-
-<div class="container">
-    {% block content %}{% endblock %}
-</div>
-
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
 </body>
 </html>

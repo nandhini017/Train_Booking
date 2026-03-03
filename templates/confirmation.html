@@ -1,10 +1,177 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block content %}
 
-<div class="success">
-    <h2>✅ Booking Confirmed</h2>
-    <p>Your PNR: <strong>{{ pnr }}</strong></p>
-    <a href="/"><button>Back Home</button></a>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.ticket-container {
+    background: #fff;
+    width: 500px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    padding: 35px;
+    position: relative;
+    border-left: 8px solid #007bff;
+    overflow: hidden;
+}
+.ticket-header {
+    text-align: center;
+    padding-bottom: 20px;
+    border-bottom: 2px dashed #ccc;
+    margin-bottom: 25px;
+}
+.ticket-header h3 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 700;
+    color: #007bff;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+.pnr {
+    font-size: 16px;
+    font-weight: 600;
+    color: #ff5722;
+    margin-top: 8px;
+    letter-spacing: 1px;
+}
+.ticket-details {
+    font-size: 15px;
+    color: #333;
+}
+.ticket-details .row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.ticket-details .row .label {
+    font-weight: 600;
+    color: #555;
+}
+.ticket-details .row .value {
+    font-weight: 500;
+    color: #000;
+}
+.route {
+    text-align: center;
+    font-weight: 700;
+    font-size: 18px;
+    margin-top: 15px;
+    color: #28a745;
+}
+.footer {
+    text-align: center;
+    margin-top: 30px;
+}
+.footer button {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #007bff, #00c6ff);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 6px 15px rgba(0,123,255,0.3);
+}
+.footer button:hover {
+    background: linear-gradient(90deg, #0056b3, #0099cc);
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,123,255,0.4);
+}
+.ticket-container::before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle, rgba(0,123,255,0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+    pointer-events: none;
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<div class="ticket-container" id="ticket">
+
+    <div class="ticket-header">
+        <h3>Booking Confirmed ✅</h3>
+        <div class="pnr">PNR: {{ booking.pnr }}</div>
+    </div>
+
+    <div class="ticket-details">
+        <div class="row">
+            <div class="label">Passenger:</div>
+            <div class="value">{{ booking.passenger_name }}</div>
+        </div>
+        <div class="row">
+            <div class="label">Age:</div>
+            <div class="value">{{ booking.age }}</div>
+        </div>
+        <div class="row">
+            <div class="label">Email:</div>
+            <div class="value">{{ booking.email }}</div>
+        </div>
+        <div class="row">
+            <div class="label">Phone:</div>
+            <div class="value">{{ booking.phone }}</div>
+        </div>
+        <div class="row">
+            <div class="label">Train Name:</div>
+            <div class="value">{{ train.name }}</div>
+        </div>
+        <div class="row">
+            <div class="label">Seat Number:</div>
+            <div class="value">{{ booking.seat_number }}</div>
+        </div>
+        <div class="row">
+            <div class="label">Departure:</div>
+            <div class="value">{{ train.departure }}</div>
+        </div>
+        <div class="row">
+            <div class="label">Arrival:</div>
+            <div class="value">{{ train.arrival }}</div>
+        </div>
+        <div class="row">
+            <div class="label">Class:</div>
+            <div class="value">{{ booking.class_type }}</div>
+        </div>
+        <div class="row">
+            <div class="label">Travel Date:</div>
+            <div class="value">{{ booking.travel_date }}</div>
+        </div>
+
+        <div class="route">
+            {{ train.from_city }} → {{ train.to_city }}
+        </div>
+    </div>
+
+    <div class="footer">
+        <button id="downloadBtn">Download Ticket</button>
+    </div>
+
 </div>
+
+<script>
+document.getElementById('downloadBtn').addEventListener('click', function() {
+    const ticket = document.getElementById('ticket');
+    html2canvas(ticket).then(canvas => {
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/png');
+        link.download = 'train_ticket_{{ booking.pnr }}.png';
+        link.click();
+    });
+});
+</script>
 
 {% endblock %}

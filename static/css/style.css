@@ -1,92 +1,37 @@
 body {
+    font-family: Arial;
+    background: #f4f6f8;
     margin: 0;
-    font-family: 'Segoe UI';
-    background: #f0f2f5;
 }
 
-header {
-    background: #0a3d62;
+.navbar {
+    background: #d32f2f;
     color: white;
-    padding: 15px 40px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.hero {
-    background: url('/static/images/banner.jpg') center/cover no-repeat;
-    padding: 120px;
+    padding: 15px;
     text-align: center;
-    color: white;
 }
 
-.search-card {
-    background: white;
-    width: 50%;
-    margin: -60px auto 40px;
+.container {
     padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    text-align: center;
 }
 
-.search-card input {
-    padding: 12px;
-    margin: 10px;
-    width: 40%;
+form select,
+form input {
+    padding: 8px;
+    margin: 5px;
 }
 
 button {
-    padding: 12px 25px;
-    background: #e84118;
+    padding: 8px 15px;
+    background: #d32f2f;
     color: white;
     border: none;
-    border-radius: 8px;
     cursor: pointer;
 }
 
-.train-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
-    gap: 20px;
-}
-
-.train-card {
+.card {
     background: white;
     padding: 15px;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    text-align: center;
-}
-
-.train-card img {
-    width: 100%;
-    border-radius: 10px;
-}
-
-.seat-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 80px);
-    gap: 15px;
-    justify-content: center;
-}
-
-.seat {
-    background: green;
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-}
-
-.form-card {
-    background: white;
-    padding: 30px;
-    width: 40%;
-    margin: auto;
-    border-radius: 15px;
-}
-
-.success {
-    text-align: center;
-    margin-top: 100px;
+    margin: 10px 0;
+    border-radius: 6px;
 }

@@ -1,13 +1,108 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block content %}
 
-<h2>Passenger Details</h2>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #1e3c72, #2a5298);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-<form action="/payment/{{ train_id }}/{{ seat }}" method="POST" class="form-card">
-    <input type="text" name="name" placeholder="Full Name" required>
-    <input type="number" name="age" placeholder="Age" required>
-    <p>Seat Selected: {{ seat }}</p>
-    <button type="submit">Proceed to Payment</button>
-</form>
+    .passenger-container {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 30px;
+        border-radius: 15px;
+        width: 500px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+
+    h3 {
+        text-align: center;
+        color: #00796b;
+        margin-bottom: 20px;
+    }
+
+    .seat-info {
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 20px;
+        font-size: 16px;
+        color: #004d40;
+    }
+
+    .passenger-form {
+        display: grid;
+        grid-gap: 12px;
+    }
+
+    .passenger-card {
+        border: 1px solid #ccc;
+        border-radius: 12px;
+        padding: 15px;
+        background: #f1f1f1;
+    }
+
+    .passenger-card h4 {
+        margin: 0 0 10px 0;
+        font-size: 16px;
+        color: #00796b;
+    }
+
+    .passenger-card input, .passenger-card select {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0;
+        border-radius: 8px;
+        border: 1px solid #aaa;
+    }
+
+    .submit-btn {
+        padding: 12px;
+        background: #00796b;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 15px;
+        transition: 0.3s;
+    }
+
+    .submit-btn:hover {
+        background: #004d40;
+        transform: scale(1.03);
+    }
+</style>
+
+<div class="passenger-container">
+    <h3>Passenger Details</h3>
+    <div class="seat-info">
+        Train: <strong>{{ train.name }}</strong> | Seat: <strong>{{ seat }}</strong>
+    </div>
+
+    <form action="/payment/{{ train.id }}/{{ seat }}" method="POST" class="passenger-form">
+        <div class="passenger-card">
+            <h4>Passenger 1</h4>
+            <input type="text" name="name" placeholder="Passenger Name" required>
+            <input type="number" name="age" placeholder="Age" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="text" name="phone" placeholder="Phone Number" required>
+            <select name="class_type" required>
+                <option value="Sleeper">Sleeper</option>
+                <option value="3AC">3AC</option>
+                <option value="2AC">2AC</option>
+                <option value="1AC">1AC</option>
+            </select>
+            <input type="date" name="travel_date" required>
+        </div>
+
+        <button type="submit" class="submit-btn">Confirm Booking</button>
+    </form>
+</div>
 
 {% endblock %}
